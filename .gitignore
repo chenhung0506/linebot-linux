@@ -1,0 +1,7 @@
+/flask/
+logs/
+.DS_Store
+module/const.pyc
+module/__pycache__/
+module/linux_chromedriver
+module/mac_chromedriver

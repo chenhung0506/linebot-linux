@@ -1,0 +1,15 @@
+requests
+PyMySQL==0.9.3
+python-dotenv==0.11.0
+Flask==1.1.1
+opencc-python-reimplemented==0.1.5
+Flask-Cors==3.0.8
+Flask-RESTful==0.3.8
+APScheduler==3.5.0
+line-bot-sdk==1.16.0
+bs4==0.0.1
+selenium==3.8.0
+# wget==3.2
+# libxml2
+# libxslt
+# lxml
