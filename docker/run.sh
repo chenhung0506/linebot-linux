@@ -51,7 +51,7 @@ operation() {
         read -p "Enter TAG: " INPUT_TAG
         # echo "input TAG: $INPUT_TAG"
         export TAG=$INPUT_TAG
-        CMD=("docker-compose up -d")
+        CMD=("dockerComposeUp")
         for i in "${CMD[@]}";do
             echo $i
         done
