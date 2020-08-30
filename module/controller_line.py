@@ -53,9 +53,6 @@ log = logpy.logging.getLogger(__name__)
 def setup_route(api):
     api.add_resource(Callback, '/callback')
 
-log.info(const.CHANNEL_SECRET)
-log.info(const.CHANNEL_TOKEN)
-
 handler = WebhookHandler(const.CHANNEL_SECRET) #channel secret
 line_bot_api = LineBotApi(const.CHANNEL_TOKEN) #access token
 
@@ -77,6 +74,8 @@ class Callback(Resource):
             for m in e.error.details:
                 log.info(m.property + m.message)
         except InvalidSignatureError:
+            log.info(const.CHANNEL_SECRET)
+            log.info(const.CHANNEL_TOKEN)
             abort(400)
 
         return 'OK'
