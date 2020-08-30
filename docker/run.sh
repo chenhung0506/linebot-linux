@@ -18,8 +18,8 @@ echo "[ -------- 1.   build and run         -------- ]"
 echo "[ -------- 2.   pull image and run    -------- ]"
 echo "[ -------- 3.   run module            -------- ]"
 echo "[ -------- 4.   stop module           -------- ]"
-echo "[ -------- 5.   save image            -------- ]"
-echo "[ -------- 6.   save deploy           -------- ]"
+echo "[ -------- 5.   save image & deploy   -------- ]"
+echo "[ -------- 6.   push image            -------- ]"
 
 if [ $# -eq 1 ]; then
     input_str=$1
@@ -61,12 +61,12 @@ operation() {
             echo $i
         done
     elif [ $mode == "5" ]; then
-        CMD=("saveImage")
+        CMD=("saveImage saveDeploy")
         for i in "${CMD[@]}";do
             echo $i
         done
     elif [ $mode == "6" ]; then
-        CMD=("saveDeploy")
+        CMD=("pushImage")
         for i in "${CMD[@]}";do
             echo $i
         done

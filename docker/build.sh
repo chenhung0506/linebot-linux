@@ -12,6 +12,14 @@ build() {
   eval $cmd
 }
 
+pushImage(){
+  TAG=$(git rev-parse --short HEAD)
+  cmd1="docker tag chenhung0506/linebot-linux:latest chenhung0506/linebot-linux:$TAG"
+  echo $cmd1 && eval $cmd1
+  cmd2="docker push chenhung0506/linebot-linux:$TAG"
+  echo $cmd2 && eval $cmd2
+}
+
 build_base_image() {
   echo "docker build -t python-with-chrome -f ./build_from_image/Dockerfile . "
   eval "docker build -t python-with-chrome -f ./build_from_image/Dockerfile . "
@@ -22,8 +30,6 @@ build_base_image() {
 }
 
 imagePush() {
-  REPO=chenhung0506
-  CONTAINER=linebot
   TAG=$(git rev-parse --short HEAD)
   DOCKER_IMAGE=$REPO/$CONTAINER:$TAG
   docker push DOCKER_IMAGE
@@ -48,8 +54,7 @@ imagePull() {
 
 dockerComposeUp() {
   cmd="docker-compose up -d"
-  echo $cmd
-  eval $cmd
+  echo $cmd && eval $cmd
 }
 
 dockerRun() {
@@ -89,8 +94,7 @@ saveImage(){
   fi
 
   cmd="docker save $DOCKER_IMAGE | gzip > $BUILDROOT/imgs/$CONTAINER-$TAG-$(date +"%Y%m%d%H%M%S").tar.gz"
-  echo $cmd
-  eval $cmd
+  echo $cmd && eval $cmd
 }
 
 saveDeploy(){
@@ -100,6 +104,5 @@ saveDeploy(){
   BUILD_DIR=$DIR/../..
   cmd="tar -C $DIR/.. -zcvf ${DIR}-${TAG}.tar.gz ${PROJECT_NAME}"
   # $(basename "$PWD")
-  echo $cmd
-  eval $cmd
+  echo $cmd && eval $cmd
 }

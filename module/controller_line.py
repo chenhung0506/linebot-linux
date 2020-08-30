@@ -53,8 +53,8 @@ log = logpy.logging.getLogger(__name__)
 def setup_route(api):
     api.add_resource(Callback, '/callback')
 
-channel_secret = const.CHANNEL_SECRET
-channel_access_token = const.CHANNEL_TOKEN
+log.info(const.CHANNEL_SECRET)
+log.info(const.CHANNEL_TOKEN)
 
 handler = WebhookHandler(const.CHANNEL_SECRET) #channel secret
 line_bot_api = LineBotApi(const.CHANNEL_TOKEN) #access token
@@ -114,18 +114,17 @@ def handle_text_message(event):
 
     log.info('userId: ' + str(event.source.user_id))
 
-    data=[]
-    try:
-        conn = pymysql.Connect(host='us-cdbr-east-02.cleardb.com',user='bdef9ef0984947',passwd='0b65d70f',db='heroku_d38736f240fb4e6',charset='utf8')
-        data = dao.Database(conn).queryConversation( str(event.source.user_id) )
-    except Exception as e:
-        log.info("queryConversation occured some error: "+utils.except_raise(e))
-    finally:
-        conn.close()
-    # if len(data) == 1:
-    #     if data[0][1] == '':
-
-    log.info(len(data))
+    # data=[]
+    # try:
+    #     conn = pymysql.Connect(host='us-cdbr-east-02.cleardb.com',user='bdef9ef0984947',passwd='0b65d70f',db='heroku_d38736f240fb4e6',charset='utf8')
+    #     data = dao.Database(conn).queryConversation( str(event.source.user_id) )
+    # except Exception as e:
+    #     log.info("queryConversation occured some error: "+utils.except_raise(e))
+    # finally:
+    #     conn.close()
+    # # if len(data) == 1:
+    # #     if data[0][1] == '':
+    # log.info(len(data))
 
 
     # try:
