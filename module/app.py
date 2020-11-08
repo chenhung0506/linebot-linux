@@ -21,9 +21,9 @@ from apscheduler.triggers.cron import CronTrigger
 
 utils.setLogFileName()
 log = logpy.logging.getLogger(__name__)
-
 app = Flask(__name__)
 api = Api(app)
+app.static_folder = os.path.abspath("resource/static/")
 controller.setup_route(api)
 controller_line.setup_route(api)
 

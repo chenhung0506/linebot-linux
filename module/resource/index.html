@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+		<meta charset="utf-8">
+		<title>iframe test</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<div id="container">
+  <div id="leftThing">
+    <iframe width="100%" height="450" src="https://pigav.com" frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+  </iframe>
+  </div>
+  <div id="rightThing">
+    <iframe width="100%" height="450" src="https://www.youtube.com/embed/JzclUD7PzUA" frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+<script>
+$(function () {
+  closeChatBot = function(){
+    alert('count down success');
+  };
+});
+</script>
+<style lang="scss">
+  #container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+  }
+  #leftThing {
+    width: 50%;
+    height: 100%;
+    background-color: blue;
+  }
+  #rightThing {
+    width: 50%;
+    height: 100%;
+    background-color: yellow;
+  }
+</style>
+</html>
+

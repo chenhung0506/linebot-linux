@@ -18,7 +18,7 @@ import service
 import utils
 import service_line
 from datetime import datetime, timedelta
-from flask import Flask, Response, render_template, request, redirect, jsonify, abort
+from flask import Flask, Response, render_template, request, redirect, jsonify, send_from_directory, url_for
 from threading import Timer,Thread,Event
 from flask_restful import Resource
 from datetime import datetime
@@ -38,6 +38,19 @@ def setup_route(api):
     api.add_resource(Forecast, '/forecast')
     api.add_resource(SendMail, '/sendmail')
     api.add_resource(airbnb, '/airbnb')
+    api.add_resource(Iframe, '/iframe')
+    api.add_resource(StaticResource, '/static/<path:filename>')
+
+class Iframe(Resource):
+    log.debug('check health')
+    def get(self):
+        return send_from_directory('./resource', 'index.html')
+
+class StaticResource(Resource):
+    def get(self, filename):
+        # root_dir = os.path.dirname(os.getcwd())
+        # return send_from_directory( os.path.join(root_dir,'static'), filename)
+        return send_from_directory( filename )
 
 class airbnb(Resource):
     def get(self):
