@@ -7,12 +7,14 @@
 </head>
 <div id="container">
   <div id="leftThing">
-    <iframe width="100%" height="450" src="" frameborder="0" 
+    <input type="text" name="input-left"><input type="button" name="button-left" value="go">
+    <iframe id='iframe-left' width="100%" height="450" src="" frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
   </iframe>
   </div>
   <div id="rightThing">
-    <iframe width="100%" height="450" src=""></iframe>
+    <input type="text" name="input-right"><input type="button" name="button-right" value="go">
+    <iframe id='iframe-right' width="100%" height="450" src=""></iframe>
   </div>
 </div>
 </body>
@@ -21,9 +23,31 @@ $(function () {
   closeChatBot = function(){
     alert('count down success');
   };
+  $('input[name=input-left]').change(function() {
+    console.log($('input[name=input-left]').val());
+    loadIframe('iframe-left', $('input[name=input-left]').val());
+  });
+  $('input[name=input-right]').change(function() {
+    console.log($('input[name=input-right]').val());
+    loadIframe('iframe-right', $('input[name=input-right]').val());
+  });
+  function loadIframe(iframeName, url) {
+    var $iframe = $('#' + iframeName);
+    if ( $iframe.length ) {
+        $iframe.attr('src',url);   
+        return false;
+    }
+    return true;
+  }
 });
 </script>
 <style lang="scss">
+  input {
+      resize: horizontal;
+  }
+  input:active {
+      width: 100%;   
+  }
   #container {
     height: 100%;
     width: 100%;
