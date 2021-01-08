@@ -7,29 +7,30 @@
 </head>
 <div id="container">
   <div id="leftThing">
-    <input type="text" name="input-left"><input type="button" name="button-left" value="go">
-    <iframe id='iframe-left' width="100%" height="450" src="" frameborder="0" 
+    <input type="text" name="input-left"><input type="button" name="button-left" class="search" value="search">
+    <iframe id='iframe-left' width="100%" height="450" src="" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
   </iframe>
   </div>
   <div id="rightThing">
-    <input type="text" name="input-right"><input type="button" name="button-right" value="go">
-    <iframe id='iframe-right' width="100%" height="450" src=""></iframe>
+    <input type="text" name="input-right"><input type="button" name="button-right" class="search" value="search">
+    <iframe id='iframe-right' width="100%" height="450" src=""
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+  </iframe>
   </div>
 </div>
 </body>
 <script>
 $(function () {
-  closeChatBot = function(){
-    alert('count down success');
-  };
+  $('input[name=input-left]').css('width',$('#leftThing').width()-$('input[name=button-left]').width()-30);
+  $('input[name=input-right]').css('width',$('#rightThing').width()-$('input[name=button-right]').width()-30);
   $('input[name=input-left]').change(function() {
     console.log($('input[name=input-left]').val());
-    loadIframe('iframe-left', $('input[name=input-left]').val());
+    loadIframe('iframe-left', $('input[name=input-left]').val() + '?playsinline=1');
   });
   $('input[name=input-right]').change(function() {
     console.log($('input[name=input-right]').val());
-    loadIframe('iframe-right', $('input[name=input-right]').val());
+    loadIframe('iframe-right', $('input[name=input-right]').val() + '?playsinline=1');
   });
   function loadIframe(iframeName, url) {
     var $iframe = $('#' + iframeName);
@@ -42,6 +43,9 @@ $(function () {
 });
 </script>
 <style lang="scss">
+  .search{
+    width: 60px;
+  }
   input {
       resize: horizontal;
   }
@@ -56,13 +60,10 @@ $(function () {
   #leftThing {
     width: 50%;
     height: 100%;
-    background-color: blue;
   }
   #rightThing {
     width: 50%;
     height: 100%;
-    background-color: yellow;
   }
 </style>
 </html>
-
