@@ -5,8 +5,8 @@ WORK_PATH=$(dirname "$0")
 source ${WORK_PATH}/build.sh 
 REPO=chenhung0506
 CONTAINER=linebot-linux
-exprot $REPO
-exprot $CONTAINER
+export $REPO
+export $CONTAINER
 
 export TAG=$(git rev-parse --short HEAD)
 set -o allexport
@@ -50,7 +50,10 @@ operation() {
     elif [ $mode == "3" ]; then
         read -p "Enter TAG: " INPUT_TAG
         # echo "input TAG: $INPUT_TAG"
+        set -o allexport
         export TAG=$INPUT_TAG
+        set +o allexport
+        echo $TAG
         CMD=("dockerComposeUp")
         for i in "${CMD[@]}";do
             echo $i

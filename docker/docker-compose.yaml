@@ -13,11 +13,6 @@ services:
     volumes:
       - ~/volumes/customized:/usr/src/app/logs
     restart: always
-    # deploy:
-    #   resources:
-    #     mem_limit: 5125m
-    # depends_on: 
-    #   - nlu-tde
     ports: 
       - "${PORT}:${PORT}"
     env_file:
@@ -28,13 +23,10 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-  # selenium:
-  #   image: selenium/standalone-chrome
-  #   ports:
-  #   - 4444:4444
-
-# networks:
-#   default:
-#     external:
-#       name : ${DOCKER_NETWORK}
+    networks: 
+      - nginx
+networks:
+  nginx:
+    external: true
+    name: nginx
 

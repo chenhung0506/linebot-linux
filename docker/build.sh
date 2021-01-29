@@ -1,6 +1,6 @@
 #!/bin/bash
 build() {
-  TAG=$(git rev-parse --short HEAD)
+  TAG=$(git rev-parse --short HEAD)-$(date '+%Y%m%d-%H%M') 
   DOCKER_IMAGE=$REPO/$CONTAINER:$TAG
 
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
