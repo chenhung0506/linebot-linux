@@ -63,6 +63,10 @@ if line_bot_api is None or handler is None:
 class Callback(Resource):
     log.info('execute api callback')
     def post(self):
+        log.info(':::')
+        log.info(request)
+        log.info(request.headers)
+        log.info(':::')
         signature = request.headers['X-Line-Signature']
         body = request.get_data(as_text=True)
         log.info("Request body: " + body)
@@ -73,6 +77,7 @@ class Callback(Resource):
             log.info("Got exception from LINE Messaging API: %s\n" % e.message)
             for m in e.error.details:
                 log.info(m.property + m.message)
+            return 'OK'
         except InvalidSignatureError:
             log.info(const.CHANNEL_SECRET)
             log.info(const.CHANNEL_TOKEN)

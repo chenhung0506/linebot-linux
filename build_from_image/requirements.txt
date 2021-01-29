@@ -9,6 +9,7 @@ APScheduler==3.5.0
 line-bot-sdk==1.16.0
 bs4==0.0.1
 selenium==3.8.0
+# line-bot-sdk
 # wget==3.2
 # libxml2
 # libxslt

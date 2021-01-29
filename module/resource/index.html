@@ -25,12 +25,17 @@ $(function () {
   $('input[name=input-left]').css('width',$('#leftThing').width()-$('input[name=button-left]').width()-30);
   $('input[name=input-right]').css('width',$('#rightThing').width()-$('input[name=button-right]').width()-30);
   $('input[name=input-left]').change(function() {
-    console.log($('input[name=input-left]').val());
-    loadIframe('iframe-left', $('input[name=input-left]').val() + '?playsinline=1');
+    let leftInput = $('input[name=input-left]').val()
+    console.log(leftInput);
+    setCookie('leftInput',leftInput);
+    loadIframe('iframe-left', leftInput + '?playsinline=1');
+    console.log(document.cookie)
   });
   $('input[name=input-right]').change(function() {
-    console.log($('input[name=input-right]').val());
-    loadIframe('iframe-right', $('input[name=input-right]').val() + '?playsinline=1');
+    let rightInput = $('input[name=input-right]').val()
+    console.log(rightInput);
+    setCookie('rightInput',rightInput);
+    loadIframe('iframe-right', rightInput + '?playsinline=1');
   });
   function loadIframe(iframeName, url) {
     var $iframe = $('#' + iframeName);
@@ -40,6 +45,26 @@ $(function () {
     }
     return true;
   }
+
+  function setCookie(name, value) {
+      const Days = 1;
+      const exp = new Date();
+      const timetoday = parseInt(exp.getTime(), 10);
+      const timelastday = parseInt((Days * 24 * 60 * 60 * 1000), 10);
+      const timestamp = timetoday + timelastday;
+      exp.setTime(timestamp);
+      document.cookie = `${name}=${escape(value)};expires=${exp.toGMTString()}`;
+  }
+
+  function getCookie(name) {
+      const reg = new RegExp(`(^| )${name}=([^;]*)(;|$)`);
+      const arr = document.cookie.match(reg);
+      if (arr) {
+        return arr[2];
+      }
+      return null;
+  }
+
 });
 </script>
 <style lang="scss">
