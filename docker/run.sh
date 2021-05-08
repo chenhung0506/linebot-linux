@@ -1,98 +1,32 @@
 #!/bin/bash
-# REPO=docker-reg.emotibot.com.cn:55688
-#this is git test
+PUSH_IMG='false'
+# GIT_HEAD=$(git rev-parse --short=7 HEAD)
+# GIT_DATE=$(git log HEAD -n1 --pretty='format:%cd' --date=format:'%Y%m%d-%H%M')
+# GIT_DATE=$(date '+%Y%m%d-%H%M') 
+# TAG=$GIT_HEAD-$GIT_DATE
+
 WORK_PATH=$(dirname "$0")
 source ${WORK_PATH}/build.sh 
-REPO=chenhung0506
-CONTAINER=linebot-linux
-export $REPO
-export $CONTAINER
 
-export TAG=$(git rev-parse --short HEAD)
-set -o allexport
-source ../module/dev.env
-set +o allexport
+ENV=dev.env
+export TAG='latest'
+export REPO=harbor.chlin.tk/python
+export CONTAINER=linebot-linux
 
-echo "[ -------- 0.   build/push base image -------- ]"
-echo "[ -------- 1.   build and run         -------- ]"
-echo "[ -------- 2.   pull image and run    -------- ]"
-echo "[ -------- 3.   run module            -------- ]"
-echo "[ -------- 4.   stop module           -------- ]"
-echo "[ -------- 5.   save image & deploy   -------- ]"
-echo "[ -------- 6.   push image            -------- ]"
+getopts_help $@
+select_number $1
+echo "mode: "$?
 
-if [ $# -eq 1 ]; then
-    input_str=$1
-else
-    read input_str
+if [[ "$1" =~ ^[0-9] ]]
+    then
+    echo "befor:" $@
+    set -- "${@:2:$#}"
+    echo "after:" $@
 fi
 
-echo "input_str:"$input_str
-CMD=""
+setting_getopts $@
+execute_option $mode
 
-operation() {
-    mode=$1
-    if [ $mode == "0" ]; then
-        CMD=("build_base_image")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "1" ]; then
-        CMD=("build" "dockerComposeUp")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "2" ]; then
-        CMD=("imagePull" "dockerComposeUp")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "3" ]; then
-        read -p "Enter TAG: " INPUT_TAG
-        # echo "input TAG: $INPUT_TAG"
-        set -o allexport
-        export TAG=$INPUT_TAG
-        set +o allexport
-        echo $TAG
-        CMD=("dockerComposeUp")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "4" ]; then
-        CMD=("docker-compose down")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "5" ]; then
-        CMD=("saveImage saveDeploy")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    elif [ $mode == "6" ]; then
-        CMD=("pushImage")
-        for i in "${CMD[@]}";do
-            echo $i
-        done
-    fi
-}
-
-execute_iterator(){
-    if [[ ${#input_str} > 0 ]]; then
-        input_arr=($(echo $input_str | sed  's/,/ /g'))
-        for i in "${input_arr[@]}";do
-            local res=$(operation $i)
-            res_arr=($(echo $res | sed  's/ / /g'))
-            for i in "${res_arr[@]}";do
-                echo $i && eval $i
-            done
-            # for j in "${res[@]}";do
-            #     echo "::::"
-            #     echo "::::"
-            #     echo $j && eval $j
-            # done
-        done
-    fi
-}
-
-execute_iterator
-# execute
+if [ $PUSH_IMG = 'true' ] ; then
+    execute_option 5
+fi

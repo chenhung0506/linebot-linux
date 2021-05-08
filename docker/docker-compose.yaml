@@ -1,12 +1,7 @@
 version: "3.7"
 services:
   web:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    #   args:
-    #     argTest: success
-    image: chenhung0506/linebot-linux:${TAG}
+    image: ${DOCKER_IMAGE}
     container_name: linebot-linux
     # environment:
     #   - PORT=22222
@@ -16,7 +11,7 @@ services:
     ports: 
       - "${PORT}:${PORT}"
     env_file:
-      - ../module/dev.env
+      - dev.env
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:${PORT}/healthCheck || exit 1"]
       interval: 1m30s

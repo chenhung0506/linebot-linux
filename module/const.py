@@ -3,12 +3,13 @@ import os
 from dotenv import load_dotenv
 
 APP_ROOT = os.path.join(os.path.dirname(__file__), '.') 
-load_const_path=''
-if os.path.exists('./dev.env'):
-    load_const_path='./dev.env'
-else:
-    load_const_path='../dev.env'
-dotenv_path = os.path.join(APP_ROOT, load_const_path)
+# load_const_path=''
+# if os.path.exists('./dev.env'):
+#     load_const_path='./dev.env'
+# else:
+#     load_const_path='../dev.env'
+# dotenv_path = os.path.join(APP_ROOT, load_const_path)
+dotenv_path = os.path.join(APP_ROOT, '../docker/dev.env')
 load_dotenv(dotenv_path)
 print( os.getenv('IS_LOADED') + ", .env file path: " + dotenv_path )
 
