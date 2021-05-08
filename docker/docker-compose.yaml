@@ -2,11 +2,11 @@ version: "3.7"
 services:
   web:
     image: ${DOCKER_IMAGE}
-    container_name: linebot-linux
+    container_name: linebot
     # environment:
     #   - PORT=22222
     volumes:
-      - ~/volumes/customized:/usr/src/app/logs
+      - ~/volumes/linebot:/usr/src/app/logs
     restart: always
     ports: 
       - "${PORT}:${PORT}"
