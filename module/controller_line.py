@@ -153,23 +153,23 @@ def handle_text_message(event):
                         QuickReplyButton(
                             action=PostbackAction(label="一週天氣", text="一週天氣", data="forecast")
                         ),
-                        QuickReplyButton(
-                            action=PostbackAction(label="寄信", text="寄信", data="sendemail")
-                        ),
-                        QuickReplyButton(
-                            action=DatetimePickerAction(label="label3",
-                                                        data="data3",
-                                                        mode="date")
-                        ),
-                        QuickReplyButton(
-                            action=CameraAction(label="label4")
-                        ),
-                        QuickReplyButton(
-                            action=CameraRollAction(label="label5",data="data1")
-                        ),
-                        QuickReplyButton(
-                            action=LocationAction(label="label6")
-                        ),
+                        # QuickReplyButton(
+                        #     action=PostbackAction(label="寄信", text="寄信", data="sendemail")
+                        # ),
+                        # QuickReplyButton(
+                        #     action=DatetimePickerAction(label="label3",
+                        #                                 data="data3",
+                        #                                 mode="date")
+                        # ),
+                        # QuickReplyButton(
+                        #     action=CameraAction(label="label4")
+                        # ),
+                        # QuickReplyButton(
+                        #     action=CameraRollAction(label="label5",data="data1")
+                        # ),
+                        # QuickReplyButton(
+                        #     action=LocationAction(label="label6")
+                        # ),
                     ])))
     elif text == 'bnb':
         line_bot_api.reply_message(

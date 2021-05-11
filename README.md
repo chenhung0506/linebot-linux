@@ -64,4 +64,75 @@ vi ./docker/dev.env
 ```
 python ./docker/module/server.py
 ```
-- 
+
+## Linebot richmenu
+```
+curl -v -X POST https://api.line.me/v2/bot/richmenu \
+-H 'Authorization: Bearer {EnSpzk7sQ04AnBwO34YukvfIRF33MeJzwlHuuwH8eCT9rUXLO6wr0fu50TNllOLh+YkK0I8Vjxx2gVllw5Im82OeAvPTc40wS7HLHS6NdcQUazxxS9myCePXHsITe2kqhCCCWHf0o57+HUo364lvqQdB04t89/1O/w1cDnyilFU=}' \
+-H 'Content-Type: application/json' \
+-d \
+'{
+    "size": {
+      "width": 2500,
+      "height": 843
+    },
+    "selected": false,
+    "name": "richmenu-1",
+    "chatBarText": "選單1",
+    "areas": [
+      {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 833,
+          "height": 843
+        },
+        "action": {
+          "type": "message",
+          "label": "tool",
+          "text": "tool"
+        }
+      },
+      {
+        "bounds": {
+          "x": 833,
+          "y": 0,
+          "width": 833,
+          "height": 843
+        },
+        "action": {
+          "type": "uri",
+          "label": "https://resume.chlin.tk",
+          "uri": "https://resume.chlin.tk"
+        }
+      },
+      {
+        "bounds": {
+          "x": 1666,
+          "y": 0,
+          "width": 833,
+          "height": 843
+        },
+        "action": {
+          "type": "message",
+          "label": "請留言",
+          "text": "請留言"
+        }
+      }
+   ]
+}'
+```
+
+```
+curl -v -X POST https://api-data.line.me/v2/bot/richmenu/richmenu-87369babb1cd32d3beea956812e5f350/content \
+-H "Authorization: Bearer {EnSpzk7sQ04AnBwO34YukvfIRF33MeJzwlHuuwH8eCT9rUXLO6wr0fu50TNllOLh+YkK0I8Vjxx2gVllw5Im82OeAvPTc40wS7HLHS6NdcQUazxxS9myCePXHsITe2kqhCCCWHf0o57+HUo364lvqQdB04t89/1O/w1cDnyilFU=}" \
+-H "Content-Type: image/jpeg" \
+-T richmenu.png
+```
+
+```
+curl -v -X POST https://api.line.me/v2/bot/user/all/richmenu/richmenu-87369babb1cd32d3beea956812e5f350 \
+-H "Authorization: Bearer {EnSpzk7sQ04AnBwO34YukvfIRF33MeJzwlHuuwH8eCT9rUXLO6wr0fu50TNllOLh+YkK0I8Vjxx2gVllw5Im82OeAvPTc40wS7HLHS6NdcQUazxxS9myCePXHsITe2kqhCCCWHf0o57+HUo364lvqQdB04t89/1O/w1cDnyilFU=}" \
+-H 'Content-Type: application/json'
+
+```
