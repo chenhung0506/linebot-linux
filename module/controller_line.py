@@ -700,11 +700,11 @@ def handle_postback(event):
     if regResult != None and regResult.group(2) == 'weather':
         reply_txt=service_line.lineService().getWeather(regResult.group(1))
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=reply_txt))
+            event.reply_token, TextSendMessage(text=reply_txt[0]))
     elif regResult != None and regResult.group(2) == 'forecast':
-        reply_txt=service_line.lineService().getForecast(regResult.group(1))
+        reply_txt=service_line.lineService().getWeather(regResult.group(1))
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=reply_txt))
+            event.reply_token, TextSendMessage(text=''.join(reply_txt)))
 
     if event.postback.data == 'ping':
         line_bot_api.reply_message(

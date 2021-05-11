@@ -68,16 +68,36 @@ class lineService(object):
 
     def getWeather(self, CID):
         url='https://www.cwb.gov.tw/V8/C/W/County/County.html?CID='+CID
-        response=''
+        response=[]
         try:
             # soup = self.getSoupbyApiChrome(url)
             soup = self.getSoupbyLocalChrome(url)
-            ul_36HR=soup.find('ul',{"id":"36HR_MOD"})
-            for li in ul_36HR.find_all('li'):
-                response+=(li.find('span',{"class":"title"}).string + '\n')
-                response+=(li.find('span',{"class":"tem"}).find('span',{"class":"tem-C is-active"}).string + '°C' + '\n')
-                span_rain_rate=li.find('span',{"class":"rain"})
-                response+=('降雨率:' + re.search(r".*><\/i>{1}(.*)<\/span>$", str(span_rain_rate)).group(1) + '\n')
+            # ul_36HR=soup.find('ul',{"id":"PC_Week_MOD"})
+            dateListHtml = soup.find(id="PC_Week_MOD").find('thead').find_all('th')
+            dateListHtml.pop(0) # 第一筆資料為地名
+            dateList=[]
+            for date in dateListHtml:
+                dateList.append(date.get_text())
+            table = soup.find(id="PC_Week_MOD")
+            tbody=table.find('tbody')
+            day_signal=tbody.find(class_="day").find_all("span",class_="signal")
+            day_tem_C=tbody.find(class_="day").find_all("span",class_="tem-C")
+            night_signal=tbody.find(class_="night").find_all("span",class_="signal")
+            night_tem_C=tbody.find(class_="night").find_all("span",class_="tem-C")
+
+            for i in range(7):
+                log.info(dateList[i])
+                log.info(night_tem_C[i].get_text())
+                log.info(night_signal[i].find('img').get('title'))
+                log.info(day_tem_C[i].get_text())
+                log.info(day_signal[i].find('img').get('title'))
+                response.append(dateList[i] +': 白天'+ day_signal[i].find('img').get('title') + ' ' + day_tem_C[i].get_text() + '°C 晚上' + night_signal[i].find('img').get('title') + ' ' + night_tem_C[i].get_text() + '°C')
+            log.info(response)
+            # for li in ul_36HR.find_all('li'):
+            #     response+=(li.find('span',{"class":"title"}).string + '\n')
+            #     response+=(li.find('span',{"class":"tem"}).find('span',{"class":"tem-C is-active"}).string + '°C' + '\n')
+            #     span_rain_rate=li.find('span',{"class":"rain"})
+            #     response+=('降雨率:' + re.search(r".*><\/i>{1}(.*)<\/span>$", str(span_rain_rate)).group(1) + '\n')
         except Exception as e:
             log.error(utils.except_raise(e))
         return response

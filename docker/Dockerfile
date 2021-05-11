@@ -16,6 +16,6 @@ ADD ./module /usr/src/app
 # RUN dpkg-reconfigure tzdata
 # RUN echo "Asia/Taipei" > /etc/timezone
 RUN ls /usr/src/app
-HEALTHCHECK --interval=5s --timeout=5s --retries=5 CMD curl -f "http://localhost:${PORT}/healthcheck" || exit 1 
+# HEALTHCHECK --interval=5s --timeout=5s --retries=5 CMD curl -f "http://localhost:${PORT}/healthcheck" || exit 1 
 CMD ["python", "app.py"]
 # ENTRYPOINT [ "/code/test.py" ]
