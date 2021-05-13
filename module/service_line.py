@@ -14,10 +14,31 @@ import requests
 import dao
 import pymysql
 import json
+import redis 
 
 log = logpy.logging.getLogger(__name__)
 
 class lineService(object):
+    def chatList(self, user, message):
+        try:
+            pool = redis.ConnectionPool(host='localhost', port=6379, decode_responses=True)
+            r = redis.Redis(host='localhost', port=6379, decode_responses=True)  
+
+            if message:
+                log.info(r.get(user))
+                if r.get(user)=='null' or r.get(user) == None:
+                    result=[message]
+                    r.setex(user, timedelta(minutes=10), json.dumps(result))
+                else:
+                    result=json.loads(r.get(user))
+                    result.append(message)
+                    r.setex(user, timedelta(minutes=10), json.dumps(result))
+
+
+            return json.loads(r.get(user))
+        except Exception as e:
+            log.error(utils.except_raise(e))
+
     def getSoupbyApiChrome(self, url):
         try:
             browser1 = webdriver.Remote(const.CHROMEDRIVER_PATH, DesiredCapabilities.CHROME)

@@ -40,6 +40,21 @@ def setup_route(api):
     api.add_resource(airbnb, '/airbnb')
     api.add_resource(Iframe, '/iframe')
     api.add_resource(StaticResource, '/static/<path:filename>')
+    api.add_resource(ChatList, '/chatList')
+
+# curl -v -X POST http://localhost:3001/chatList \
+# -H 'Content-Type: application/json' -d '{"user":"test","message":"test"}'
+class ChatList(Resource):
+    def post(self):
+        log.info('SetChatList api start')
+        args = request.get_json()
+        log.info(args)
+        return {
+            'status': 200,
+            'message': 'success',
+            'data': service_line.lineService().chatList(args.get('user'),args.get('message'))
+        }, 200
+
 
 class Iframe(Resource):
     log.debug('check health')

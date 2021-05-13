@@ -14,3 +14,4 @@ selenium==3.8.0
 # libxml2
 # libxslt
 # lxml
+# redis==3.5.3

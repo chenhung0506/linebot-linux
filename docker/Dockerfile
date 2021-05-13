@@ -11,6 +11,7 @@ ENV TZ=Asia/Taipei
 # RUN apk add bash
 # RUN pip install -r /usr/src/app/requirements.txt
 # ADD dev.env /usr/src/app
+RUN pip install redis
 ADD ./module /usr/src/app
 # RUN apk add -U tzdata
 # RUN dpkg-reconfigure tzdata
