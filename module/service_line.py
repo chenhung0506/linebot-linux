@@ -23,7 +23,7 @@ class lineService(object):
         try:
             pool = redis.ConnectionPool(host=const.REDIS_IP, port=const.REDIS_PORT, decode_responses=True)
             r = redis.Redis(host=const.REDIS_IP, port=const.REDIS_PORT, decode_responses=True)  
-
+            log.info("user: {}, message: {}".format(user, message))
             if message:
                 log.info(r.get(user))
                 if r.get(user)=='null' or r.get(user) == None:

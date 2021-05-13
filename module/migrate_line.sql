@@ -5,7 +5,7 @@ START TRANSACTION;
 drop table if exists `line`.`contact_info`;
 create table `line`.`contact_info`(
 	id INT NOT NULL AUTO_INCREMENT,
-    user VARCHAR(20) NOT NULL,
+    user VARCHAR(60) NOT NULL,
     init_date date,
     info VARCHAR(2048),
     PRIMARY KEY ( id )

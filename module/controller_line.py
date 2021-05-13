@@ -12,6 +12,7 @@ import time
 import ctypes 
 import threading
 import dao
+import dao_line
 import const
 import log as logpy
 import pymysql
@@ -112,16 +113,26 @@ def make_static_tmp_dir():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
-    log.info('user json:' + str(event))
-    log.info('user message:' + str(event.message.text))
-    log.info('userId: ' + str(event.source.user_id))
-    chatList=service_line.lineService().chatList(str(event.source.user_id), str(event.message.text))
-    
+    message = str(event.message.text)
+    userId = str(event.source.user_id)
+    log.info('user json => ' + str(event))
+    log.info('userId => ' + userId)
+    log.info('user message => ' + message)
+    chatList=service_line.lineService().chatList(userId, message)
+    log.info(chatList)
     try:
-        log.info(chatList[len(chatList)-1])
-        if len(chatList) > 1:
-            if chatList[len(chatList)-2] == '請在下則訊息中留言:':
-                log.info('success')
+        if chatList:
+            log.info(chatList[len(chatList)-1])
+            if len(chatList) > 1:
+                if chatList[len(chatList)-2] == '請在下則訊息中留言:':
+                    add_resp = dao_line.Database().addContackInfo({"user":userId, "info": message})
+                    if add_resp:
+                        get_resp = dao_line.Database().getContackInfo(None)
+                        log.info('success')
+                        log.info(get_resp)
+                        log.info(get_resp[len(get_resp)-1].get("info"))
+                        resp_to_user = "已收到您的留言： {}".format(get_resp[len(get_resp)-1].get("info"))
+                        line_bot_api.reply_message( event.reply_token, TextSendMessage(text=resp_to_user))
 
     except Exception as e:
         log.info(utils.except_raise(e))
