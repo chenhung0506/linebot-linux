@@ -21,8 +21,8 @@ log = logpy.logging.getLogger(__name__)
 class lineService(object):
     def chatList(self, user, message):
         try:
-            pool = redis.ConnectionPool(host='localhost', port=6379, decode_responses=True)
-            r = redis.Redis(host='localhost', port=6379, decode_responses=True)  
+            pool = redis.ConnectionPool(host=const.REDIS_IP, port=const.REDIS_PORT, decode_responses=True)
+            r = redis.Redis(host=const.REDIS_IP, port=const.REDIS_PORT, decode_responses=True)  
 
             if message:
                 log.info(r.get(user))
@@ -33,7 +33,6 @@ class lineService(object):
                     result=json.loads(r.get(user))
                     result.append(message)
                     r.setex(user, timedelta(minutes=10), json.dumps(result))
-
 
             return json.loads(r.get(user))
         except Exception as e:

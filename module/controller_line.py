@@ -63,13 +63,10 @@ if line_bot_api is None or handler is None:
 class Callback(Resource):
     log.info('execute api callback')
     def post(self):
-        log.info(':::')
-        log.info(request)
-        log.info(request.headers)
-        log.info(':::')
+        # log.info(request)
+        # log.info(request.headers)
         signature = request.headers['X-Line-Signature']
         body = request.get_data(as_text=True)
-        log.info("Request body: " + body)
 
         try:
             handler.handle(body, signature)
@@ -114,9 +111,23 @@ def make_static_tmp_dir():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
-    log.info('user message:' + str(event))
-
+    log.info('user json:' + str(event))
+    log.info('user message:' + str(event.message.text))
     log.info('userId: ' + str(event.source.user_id))
+    chatList=service_line.lineService().chatList(str(event.source.user_id), str(event.message.text))
+    
+    try:
+        log.info(chatList[len(chatList)-1])
+        if len(chatList) > 1:
+            if chatList[len(chatList)-2] == '請在下則訊息中留言:':
+                log.info('success')
+
+    except Exception as e:
+        log.info(utils.except_raise(e))
+    
+
+    # service_line.lineService().chatList(event.source.user_id, str(event.message.text))
+
 
     # data=[]
     # try:
