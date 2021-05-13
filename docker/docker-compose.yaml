@@ -10,6 +10,20 @@ services:
       - ~/volumes/redis-data:/data
     networks: 
       - nginx
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    volumes:
+      - ~/volumes/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: deployer
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - nginx
   web:
     image: ${DOCKER_IMAGE}
     container_name: linebot

@@ -76,6 +76,7 @@ class Callback(Resource):
                 log.info(m.property + m.message)
             return 'OK'
         except InvalidSignatureError:
+            log.info('InvalidSignatureError')
             log.info(const.CHANNEL_SECRET)
             log.info(const.CHANNEL_TOKEN)
             abort(400)

@@ -11,6 +11,7 @@ import time
 import ctypes 
 import threading
 import dao
+import dao_line
 import const
 import log as logpy
 import pymysql
@@ -41,6 +42,47 @@ def setup_route(api):
     api.add_resource(Iframe, '/iframe')
     api.add_resource(StaticResource, '/static/<path:filename>')
     api.add_resource(ChatList, '/chatList')
+    api.add_resource(AddContackInfo, '/addContackInfo')
+    api.add_resource(GetContackInfo, '/getContackInfo')
+
+# curl -v -X POST http://localhost:3001/addContackInfo  -H 'Content-Type: application/json' -d '{"user":"test222", "info":"1231235"}'
+class AddContackInfo(Resource):
+    def post(self):
+        try:
+            data = {"status":400, "message":"add data occur error"}, 200
+            if request.data :
+                args = request.get_json()
+                if args.get("user"):
+                    log.info(args)
+                    data = dao_line.Database().addContackInfo(args)
+                    if data:
+                        data = dao_line.Database().getContackInfo(None)
+
+            log.info(data)
+            # return {"data":data},200
+            return {"data":data, "status": 200, "message":"success"}, 200
+        except Exception as e:
+            log.error("GetUniversity error: "+utils.except_raise(e))
+            return {"status":400, "message":"get data error: {}".format(e)}, 200
+
+# curl -v -X POST http://localhost:3001/getContackInfo \
+# curl -v -X POST http://localhost:3001/getContackInfo  -H 'Content-Type: application/json' -d '{"user":"test222", "info":"1231235"}'
+class GetContackInfo(Resource):
+    def post(self):
+        try:
+            data = {}
+            args = request.get_json()
+            log.info(args)
+            if args != None and args.get("user") :
+                data = dao_line.Database().getContackInfo(args)
+            else:
+                data = dao_line.Database().getContackInfo(None)
+            log.info(data)
+            # return {"data":data},200
+            return {"data":data, "status": 200, "message":"success"}, 200
+        except Exception as e:
+            log.error("GetUniversity error: "+utils.except_raise(e))
+            return {"status":400, "message":"get data error: {}".format(e)}, 200
 
 # curl -v -X POST http://localhost:3001/chatList \
 # -H 'Content-Type: application/json' -d '{"user":"test","message":"test"}'
