@@ -189,14 +189,18 @@ class Default(Resource):
             'result': {}
         }, 200
 
+# curl http://localhost:3001/weather?country=10018 | jq
 class Weather(Resource):
     def get(self):
         log.info('GetWeather api start')
         lineService = service_line.lineService()
+        country = '65'
+        if request.args.get('country'):
+            country = request.args.get('country')
         return {
             'status': 200,
             'message': 'success',
-            'result': lineService.getWeather('65')
+            'result': lineService.getWeather(country)
         }, 200
 
 class Forecast(Resource):
