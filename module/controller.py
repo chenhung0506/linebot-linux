@@ -84,8 +84,7 @@ class GetContackInfo(Resource):
             log.error("GetUniversity error: "+utils.except_raise(e))
             return {"status":400, "message":"get data error: {}".format(e)}, 200
 
-# curl -v -X POST http://localhost:3001/chatList \
-# -H 'Content-Type: application/json' -d '{"user":"test","message":"test"}'
+# curl -v -X POST http://localhost:3001/chatList -H 'Content-Type: application/json' -d '{"user":"test","message":"test"}'
 class ChatList(Resource):
     def post(self):
         log.info('SetChatList api start')
